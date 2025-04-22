@@ -1,3 +1,4 @@
+# Common variables for all environments
 environment = "dev"
 project     = "eks"
 common_tags = {
@@ -8,6 +9,8 @@ common_tags = {
   "ManagedBy"   = "Terraform"
   "AWS Version" = "5.94.1"
 }
+
+# vpc values
 vpc_cidr = "10.1.0.0/16"
 
 azs = ["ap-south-1a","ap-south-1b"]
@@ -16,6 +19,12 @@ private_subnet_cidr = ["10.1.4.0/24","10.1.5.0/24"]
 db_subnet_cidr = ["10.1.8.0/24","10.1.9.0/24"]
 enable_nat = true
 
+# eks cluster values
 cluster_version = "1.30"
 authentication_mode = "API_AND_CONFIG_MAP"
 bootstrap_cluster_creator_admin_permissions = true
+
+# ec2 values
+zone_id = "Z011675617HENPLWZ1EJC"
+key_name = "siva"
+instance_type = "t3.micro"

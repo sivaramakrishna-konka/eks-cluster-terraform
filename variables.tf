@@ -78,4 +78,20 @@ variable "bootstrap_cluster_creator_admin_permissions" {
   description = "Whether to grant admin permissions to the bootstrap cluster creator"
   type        = bool
   default     = false
-}                
+}
+
+####################################################################################
+#                      EC2 Variables                                               #    
+####################################################################################
+variable "instance_type" {
+  description = "The instance type for the EC2 instance"
+  type        = string
+}
+variable "key_name" {
+  description = "The name of the key pair to use for SSH access"
+  type        = string
+}
+variable "zone_id" {
+  description = "The Route 53 zone ID for the domain"
+  type        = string  
+}
