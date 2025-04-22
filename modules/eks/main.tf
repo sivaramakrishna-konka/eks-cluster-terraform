@@ -1,31 +1,3 @@
-#######################################################################
-#                         EKS CLuster Security Group                  #
-#######################################################################
-resource "aws_security_group" "cluster-sg" {
-  name        = "${var.environment}-${var.project}-eks-cluster-sg"
-  description = "${var.environment}-${var.project}eks-cluster-sg"
-  vpc_id      = var.vpc_id
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "TCP"
-    cidr_blocks = [var.vpc_cidr]
-  }
-
-  tags = {
-    Name = "${var.environment}-${var.project}-eks-cluster-sg"
-  }
-}
-
 #########################################################################
 #                    EKS Control Plane                                  #
 #########################################################################
@@ -56,27 +28,33 @@ resource "aws_eks_cluster" "example" {
     aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
   ]
 }
+############################################################################
+#                   Launch Template                                        #        
+############################################################################
 
-resource "aws_iam_role" "cluster" {
-  name = "eks-cluster-example"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
+resource "aws_launch_template" "foo" {
+  name = "${var.environment}-${var.project}-launch-template"
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 20
+      volume_type = "gp3"
+      delete_on_termination = true
+    }
+  }
+
+  instance_type = "t3a.medium"
+  vpc_security_group_ids = [aws_security_group.node-sg.id]
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = merge(
       {
-        Action = [
-          "sts:AssumeRole",
-          "sts:TagSession"
-        ]
-        Effect = "Allow"
-        Principal = {
-          Service = "eks.amazonaws.com"
-        }
+      Name = "${var.environment}-${var.project}-launch-template"
       },
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
+      var.common_tags
+      )
+  }
 }

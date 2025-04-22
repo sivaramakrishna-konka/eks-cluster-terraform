@@ -12,14 +12,14 @@ module "eks_vpc" {
 }
 
 module "eks_cluster" {
-  depends_on = [ module.eks_vpc ]
-  source = "./modules/eks"
-  environment = var.environment
-  project     = var.project
-  vpc_id = module.eks_vpc.vpc_id
-  vpc_cidr = var.vpc_cidr
-  private_subnet_ids = module.eks_vpc.private_subnet_ids
-  cluster_version = var.cluster_version
-  authentication_mode = var.authentication_mode
+  depends_on                                  = [module.eks_vpc]
+  source                                      = "./modules/eks"
+  environment                                 = var.environment
+  project                                     = var.project
+  vpc_id                                      = module.eks_vpc.vpc_id
+  vpc_cidr                                    = var.vpc_cidr
+  private_subnet_ids                          = module.eks_vpc.private_subnet_ids
+  cluster_version                             = var.cluster_version
+  authentication_mode                         = var.authentication_mode
   bootstrap_cluster_creator_admin_permissions = var.bootstrap_cluster_creator_admin_permissions
 }

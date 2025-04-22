@@ -72,7 +72,7 @@ variable "cluster_version" {
 
 variable "authentication_mode" {
   description = "The authentication mode for the EKS cluster"
-  type        = string  
+  type        = string
 }
 variable "bootstrap_cluster_creator_admin_permissions" {
   description = "Whether to grant admin permissions to the bootstrap cluster creator"
