@@ -24,7 +24,14 @@ cluster_version = "1.30"
 authentication_mode = "API_AND_CONFIG_MAP"
 bootstrap_cluster_creator_admin_permissions = true
 
+# # node group values
+# instance_types = ["t3.micro"]
+# desired_size   = 1
+# max_size       = 2
+# min_size       = 2
+
 # ec2 values
 zone_id = "Z011675617HENPLWZ1EJC"
 key_name = "siva"
 instance_type = "t3.micro"
+iam_instance_profile = "siva"

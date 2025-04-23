@@ -2,7 +2,7 @@
 #                    IAM Role for EKS COntrol Plane                     #
 #########################################################################
 resource "aws_iam_role" "cluster" {
-  name = "eks-cluster-example"
+  name = "${var.environment}-${var.project}-eks-cluster-example"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -18,6 +18,11 @@ resource "aws_iam_role" "cluster" {
       },
     ]
   })
+  tags = {
+  Environment = var.environment
+  Project     = var.project
+  Terraform   = "true"
+}
 }
 
 resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
@@ -40,6 +45,11 @@ resource "aws_iam_role" "example" {
     }]
     Version = "2012-10-17"
   })
+  tags = {
+  Environment = var.environment
+  Project     = var.project
+  Terraform   = "true"
+}
 }
 
 resource "aws_iam_role_policy_attachment" "node_policy" {

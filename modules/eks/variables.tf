@@ -48,3 +48,32 @@ variable "bootstrap_cluster_creator_admin_permissions" {
   type        = bool
   default     = false
 }
+
+#########################################################################################
+#               Cluser user Access                                                      #
+#########################################################################################
+
+variable "eks_access_entry" {
+  description = "enter the list of user access entry"
+  type        = map(object({
+    principal_arn     = string
+    policy_arn        = string
+    kubernetes_groups = list(string)
+  }))
+}
+
+
+#########################################################################################
+#                Launch Template                                                        #
+#########################################################################################variable "node_group" {
+# variable "node_group" {
+#   description = "The node group configuration"
+#   type = map(object({
+#     instance_type = string
+#     ami_id        = string
+#     key_name      = string
+#   }))
+# }
+###########################################################################################
+#                        NodrGroup Variables                                              #
+###########################################################################################

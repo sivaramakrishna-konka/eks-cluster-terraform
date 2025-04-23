@@ -7,3 +7,4 @@ variable "subnet_id" {}
 variable "instance_name" {}
 variable "vpc_id" {}
 variable "zone_id" {}
+variable "iam_instance_profile"{}

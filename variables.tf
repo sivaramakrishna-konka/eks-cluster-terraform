@@ -80,6 +80,25 @@ variable "bootstrap_cluster_creator_admin_permissions" {
   default     = false
 }
 
+##################################################################################
+#                     NodeGroup Variables                                        #
+##################################################################################
+# variable "instance_types" {
+#   description = "The instance type for the EC2 instances"
+#   type        = string
+# }
+# variable "desired_size" {
+#   description = "The desired number of EC2 instances in the node group"
+#   type        = number
+# }
+# variable "max_size" {
+#   description = "The maximum number of EC2 instances in the node group"
+#   type        = number
+# }
+# variable "min_size" {
+#   description = "The minimum number of EC2 instances in the node group"
+#   type        = number
+# }
 ####################################################################################
 #                      EC2 Variables                                               #    
 ####################################################################################
@@ -93,5 +112,9 @@ variable "key_name" {
 }
 variable "zone_id" {
   description = "The Route 53 zone ID for the domain"
-  type        = string  
+  type        = string
+}
+variable "iam_instance_profile" {
+  description = "The IAM instance profile for the EC2 instance"
+  type        = string
 }
