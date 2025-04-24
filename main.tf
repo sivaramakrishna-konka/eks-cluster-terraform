@@ -41,7 +41,7 @@ module "eks_cluster" {
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
       kubernetes_groups = []
     }
- }
+  }
 }
 
 
