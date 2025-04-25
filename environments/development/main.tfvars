@@ -21,6 +21,7 @@ cluster_version = "1.30"
 authentication_mode = "API_AND_CONFIG_MAP"
 bootstrap_cluster_creator_admin_permissions = true
 # node group values
+key_name = "siva"
 node_instance_type = "t3a.medium"
 capacity_type = "ON_DEMAND"
 min_size = 1

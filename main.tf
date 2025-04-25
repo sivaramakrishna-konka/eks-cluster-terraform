@@ -22,6 +22,7 @@ module "eks_cluster" {
   cluster_version                             = var.cluster_version
   authentication_mode                         = var.authentication_mode
   bootstrap_cluster_creator_admin_permissions = var.bootstrap_cluster_creator_admin_permissions
+  key_name = var.key_name
   node_groups = {
     blue = {
       instance_types = var.node_instance_type

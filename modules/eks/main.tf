@@ -33,6 +33,7 @@ resource "aws_eks_cluster" "example" {
 resource "aws_launch_template" "main" {
   for_each = var.node_groups
   name     = each.key
+  key_name = var.key_name
 
   block_device_mappings {
     device_name = "/dev/xvda"
