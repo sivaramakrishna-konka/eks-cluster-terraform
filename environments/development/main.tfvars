@@ -1,6 +1,7 @@
 # common values
 environment = "dev"
 project     = "eks"
+key_name = "siva"
 common_tags = {
   "Environment" = "development"
   "Project"     = "eks"
@@ -21,7 +22,6 @@ cluster_version = "1.30"
 authentication_mode = "API_AND_CONFIG_MAP"
 bootstrap_cluster_creator_admin_permissions = true
 # node group values
-key_name = "siva"
 node_instance_type = "t3a.medium"
 capacity_type = "ON_DEMAND"
 min_size = 1
@@ -29,6 +29,5 @@ max_size = 2
 desired_size = 2
 # ec2 values
 zone_id = "Z011675617HENPLWZ1EJC"
-key_name = "siva"
 instance_type = "t3.micro"
 iam_instance_profile = "siva"
