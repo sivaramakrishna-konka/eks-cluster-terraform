@@ -83,22 +83,11 @@ variable "bootstrap_cluster_creator_admin_permissions" {
 ##################################################################################
 #                     NodeGroup Variables                                        #
 ##################################################################################
-# variable "instance_types" {
-#   description = "The instance type for the EC2 instances"
-#   type        = string
-# }
-# variable "desired_size" {
-#   description = "The desired number of EC2 instances in the node group"
-#   type        = number
-# }
-# variable "max_size" {
-#   description = "The maximum number of EC2 instances in the node group"
-#   type        = number
-# }
-# variable "min_size" {
-#   description = "The minimum number of EC2 instances in the node group"
-#   type        = number
-# }
+variable "node_instance_type" {}
+variable "capacity_type" {}
+variable "min_size" {}
+variable "max_size" {}
+variable "desired_size" {}
 ####################################################################################
 #                      EC2 Variables                                               #    
 ####################################################################################

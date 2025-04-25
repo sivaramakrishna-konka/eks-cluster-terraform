@@ -30,7 +30,7 @@ variable "common_tags" {
 ######################################################################################
 #               EKS Control Plance                                                   #
 ######################################################################################
-variable "private_subnet_ids" {
+variable "subnet_ids" {
   description = "List of private subnet IDs for the EKS cluster"
   type        = list(string)
 }
@@ -65,15 +65,6 @@ variable "eks_access_entry" {
 
 #########################################################################################
 #                Launch Template                                                        #
-#########################################################################################variable "node_group" {
-# variable "node_group" {
-#   description = "The node group configuration"
-#   type = map(object({
-#     instance_type = string
-#     ami_id        = string
-#     key_name      = string
-#   }))
-# }
-###########################################################################################
-#                        NodrGroup Variables                                              #
-###########################################################################################
+#########################################################################################
+variable "node_groups" {}
+

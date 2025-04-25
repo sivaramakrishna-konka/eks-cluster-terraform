@@ -18,18 +18,19 @@ module "eks_cluster" {
   project                                     = var.project
   vpc_id                                      = module.eks_vpc.vpc_id
   vpc_cidr                                    = var.vpc_cidr
-  private_subnet_ids                          = module.eks_vpc.private_subnet_ids
+  subnet_ids                                  = module.eks_vpc.public_subnet_ids
   cluster_version                             = var.cluster_version
   authentication_mode                         = var.authentication_mode
   bootstrap_cluster_creator_admin_permissions = var.bootstrap_cluster_creator_admin_permissions
-  # node_group = {
-  #   blue = {
-  #     instance_types = var.instance_types
-  #     desired_size   = var.desired_size
-  #     max_size       = var.max_size
-  #     min_size       = var.min_size
-  #   }
-  # }
+  node_groups = {
+    blue = {
+      instance_types = var.node_instance_type
+      capacity_type  = var.capacity_type
+      min_size       = var.min_size
+      max_size       = var.max_size
+      desired_size   = var.desired_size
+    }
+  }
   eks_access_entry = {
     admin-user = {
       principal_arn     = "arn:aws:iam::522814728660:root"
@@ -46,7 +47,7 @@ module "eks_cluster" {
 
 
 module "machine" {
-  depends_on           = [module.eks_vpc]
+  depends_on           = [module.eks_vpc,module.eks_cluster]
   source               = "./modules/ec2"
   environment          = var.environment
   project              = var.project

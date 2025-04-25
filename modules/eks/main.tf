@@ -13,7 +13,7 @@ resource "aws_eks_cluster" "example" {
   version  = var.cluster_version
 
   vpc_config {
-    subnet_ids = var.private_subnet_ids
+    subnet_ids = var.subnet_ids
     security_group_ids = [aws_security_group.cluster-sg.id]
     endpoint_private_access = true
     endpoint_public_access  = true
@@ -21,9 +21,7 @@ resource "aws_eks_cluster" "example" {
 
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
-  # Ensure that IAM Role permissions are created before and deleted
-  # after EKS Cluster handling. Otherwise, EKS will not be able to
-  # properly delete EKS managed EC2 infrastructure such as Security Groups.
+  
   depends_on = [
     aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
   ]
@@ -32,77 +30,49 @@ resource "aws_eks_cluster" "example" {
 #                   Launch Template                                        #        
 ############################################################################
 
-# resource "aws_launch_template" "foo" {
-#   for_each = var.node_group
-#   name = each.key
+resource "aws_launch_template" "main" {
+  for_each = var.node_groups
+  name     = each.key
 
-#   block_device_mappings {
-#     device_name = "/dev/xvda"
-#     ebs {
-#       volume_size = 20
-#       volume_type = "gp3"
-#       delete_on_termination = true
-#     }
-#   }
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 30
+      encrypted   = true
+    }
+  }
 
-#   tag_specifications {
-#     resource_type = "instance"
-
-#     tags = merge(
-#       {
-#       Name = each.key
-#       },
-#       var.common_tags
-#       )
-#   }
-# }
-
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = each.key
+    }
+  }
+}
 ##############################################################################
 #                   NodeGroup                                                #
 ##############################################################################
-# resource "aws_eks_node_group" "example" {
-#   for_each         = var.node_group
-#   cluster_name     = aws_eks_cluster.example.name
-#   node_group_name  = each.key
-#   node_role_arn    = aws_iam_role.example.arn
-#   subnet_ids       = var.private_subnet_ids
-#   instance_types   = [each.value["instance_types"]]
-#   launch_template {
-#     id      = aws_launch_template.foo.id
-#     version = "$Latest"
-#   }
+resource "aws_eks_node_group" "main" {
+  depends_on = [ aws_eks_cluster.example ]
+  for_each        = var.node_groups
+  cluster_name    = aws_eks_cluster.example.name
+  node_group_name = each.key
+  node_role_arn   = aws_iam_role.example.arn
+  subnet_ids      = var.subnet_ids
+  instance_types  = [each.value["instance_types"]]
+  capacity_type   = each.value["capacity_type"]
 
-#   scaling_config {
-#     desired_size = each.value["desired_size"]
-#     max_size     = each.value["max_size"]
-#     min_size     = each.value["min_size"]
-#   }
+  launch_template {
+    name    = each.key
+    version = "$Latest"
+  }
 
-#   update_config {
-#     max_unavailable = 1
-#   }
-
-#   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-#   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
-#   depends_on = [
-#     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
-#     aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
-#     aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
-#   ]
-# }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  scaling_config {
+    desired_size = each.value["desired_size"]
+    max_size     = each.value["max_size"]
+    min_size     = each.value["min_size"]
+  }
+}
 #################################################################################
 #                          Uer Access Entry                                     #
 #################################################################################

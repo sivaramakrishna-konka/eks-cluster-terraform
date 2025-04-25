@@ -1,4 +1,6 @@
 #!/bin/bash
+REGION=ap-south-1
+NAME=dev-eks
 
 echo "Install required packages"
 dnf install git tmux tree -y
@@ -15,3 +17,9 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 echo "installing k9s"
 curl -sS https://webinstall.dev/k9s | bash
+
+echo "Get Caller Identity"
+aws sts get-caller-identity
+
+echo "Update the kubeconfig"
+aws eks update-kubeconfig --region $REGION --name $NAME

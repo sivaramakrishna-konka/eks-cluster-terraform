@@ -36,7 +36,7 @@ resource "aws_instance" "web" {
   iam_instance_profile = var.iam_instance_profile
   tags = merge(
     {
-        Name = local.name
+        Name = local.instance_name
     },
     var.common_tags
   )
