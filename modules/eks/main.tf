@@ -85,3 +85,14 @@ module "eks_iam_access_entry" {
   kubernetes_groups = each.value["kubernetes_groups"]
   policy_arn        = each.value["policy_arn"]
 }
+#################################################################################
+#                          Addons                                               #
+#################################################################################
+module "eks_addons" {
+  depends_on = [ aws_eks_cluster.example ]
+  source = "./addons"
+  for_each = var.eks_addons
+  cluster_name = aws_eks_cluster.example.name
+  addon_name = each.key
+  addon_version = each.value
+}

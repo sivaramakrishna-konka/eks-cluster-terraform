@@ -40,6 +40,10 @@ resource "aws_instance" "web" {
     },
     var.common_tags
   )
+   lifecycle {
+    ignore_changes = [ami,key_name]
+
+  }
 }
 
 resource "null_resource" "provision_utilities" {
@@ -67,6 +71,7 @@ resource "null_resource" "provision_utilities" {
     script_hash = filesha256("${path.module}/utilities.sh")
   }
 }
+
 
 resource "aws_route53_record" "www" {
   zone_id = var.zone_id

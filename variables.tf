@@ -6,11 +6,6 @@ variable "region" {
   type        = string
   default     = "ap-south-1"
 }
-variable "profile" {
-  description = "The AWS profile to use for authentication"
-  type        = string
-  default     = "eks-siva.bapatlas.site"
-}
 
 ###################################################################################
 # Common Variables

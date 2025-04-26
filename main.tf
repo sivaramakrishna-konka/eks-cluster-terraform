@@ -16,39 +16,22 @@ module "eks_cluster" {
   source                                      = "./modules/eks"
   environment                                 = var.environment
   project                                     = var.project
+  region                                      = var.region
   vpc_id                                      = module.eks_vpc.vpc_id
   vpc_cidr                                    = var.vpc_cidr
   subnet_ids                                  = module.eks_vpc.public_subnet_ids
   cluster_version                             = var.cluster_version
   authentication_mode                         = var.authentication_mode
   bootstrap_cluster_creator_admin_permissions = var.bootstrap_cluster_creator_admin_permissions
-  key_name = var.key_name
-  node_groups = {
-    blue = {
-      instance_types = var.node_instance_type
-      capacity_type  = var.capacity_type
-      min_size       = var.min_size
-      max_size       = var.max_size
-      desired_size   = var.desired_size
-    }
-  }
-  eks_access_entry = {
-    admin-user = {
-      principal_arn     = "arn:aws:iam::522814728660:root"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-      kubernetes_groups = []
-    }
-    eks-dev = {
-      principal_arn     = "arn:aws:iam::522814728660:role/siva"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-      kubernetes_groups = []
-    }
-  }
+  key_name                                    = var.key_name
+  node_groups                                 = var.eks["node_groups"] 
+  eks_access_entry                            = var.eks["eks_access_entry"]
+  eks_addons                                  = var.eks["eks_addons"]
 }
 
 
 module "machine" {
-  depends_on           = [module.eks_vpc,module.eks_cluster]
+  depends_on           = [module.eks_vpc, module.eks_cluster]
   source               = "./modules/ec2"
   environment          = var.environment
   project              = var.project
