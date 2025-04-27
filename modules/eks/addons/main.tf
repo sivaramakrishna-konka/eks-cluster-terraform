@@ -3,7 +3,6 @@ resource "aws_eks_addon" "example" {
   addon_name                  = var.addon_name
   addon_version               = var.addon_version
   resolve_conflicts_on_create = "OVERWRITE"
-  # resolve_conflicts_on_update = "PRESERVE"
 }
 
 variable "cluster_name" {

@@ -20,17 +20,44 @@ vpc = {
   db_subnet_cidr = ["10.1.8.0/24","10.1.9.0/24"]
   enable_nat = true
 }
-# # eks cluster values
-# cluster_version = "1.30"
-# authentication_mode = "API_AND_CONFIG_MAP"
-# bootstrap_cluster_creator_admin_permissions = true
-# # node group values
-# node_instance_type = ["t3a.medium"]
-# capacity_type = "ON_DEMAND"
-# min_size = 1
-# max_size = 2
-# desired_size = 2
-# # ec2 values
-# zone_id = "Z011675617HENPLWZ1EJC"
-# instance_type = "t3.micro"
-# iam_instance_profile = "siva"
+eks = {
+  cluster_version = "1.31"
+  key_name = "siva"
+  node_groups = {
+    eks_node_group_blue = {
+      instance_types = ["t3a.medium"]
+      capacity_type  = "ON_DEMAND"
+      min_size       = 1
+      max_size       = 2
+      desired_size   = 2
+    }
+  }
+  eks_access_entry = {
+    admin-user = {
+      principal_arn     = "arn:aws:iam::522814728660:root"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      kubernetes_groups = []
+    }
+    bastion-host = {
+      principal_arn     = "arn:aws:iam::522814728660:role/siva"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      kubernetes_groups = []
+    }
+  }
+  eks_addons = {
+    vpc-cni = "v1.19.4-eksbuild.1"
+    metrics-server = "v0.7.2-eksbuild.3"
+    coredns = "v1.11.4-eksbuild.2"
+    eks-pod-identity-agent = "v1.3.5-eksbuild.2"
+    aws-ebs-csi-driver = "v1.42.0-eksbuild.1"
+  }
+}
+
+bastion = {
+  instance_type = "t3.micro"
+  instance_name = "bastion"
+  iam_instance_profile = "siva"
+  zone_id = "Z011675617HENPLWZ1EJC"
+}
+
+# aws eks describe-addon-versions --addon-name vpc-cni
