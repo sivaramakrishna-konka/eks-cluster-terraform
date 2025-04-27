@@ -54,31 +54,31 @@ variable "bootstrap_cluster_creator_admin_permissions" {
 #               Cluser user Access                                                      #
 #########################################################################################
 
-variable "eks_access_entry" {
-  description = "enter the list of user access entry"
-  type        = map(object({
-    principal_arn     = string
-    policy_arn        = string
-    kubernetes_groups = list(string)
-  }))
-}
+# variable "eks_access_entry" {
+#   description = "enter the list of user access entry"
+#   type        = map(object({
+#     principal_arn     = string
+#     policy_arn        = string
+#     kubernetes_groups = list(string)
+#   }))
+# }
 
 
-#########################################################################################
-#                Launch Template                                                        #
-#########################################################################################
-variable "node_groups" {}
-variable "key_name" {
-  description = "The name of the key pair to use for SSH access to the instances"
-  type        = string
-}
+# #########################################################################################
+# #                Launch Template                                                        #
+# #########################################################################################
+# variable "node_groups" {}
+# variable "key_name" {
+#   description = "The name of the key pair to use for SSH access to the instances"
+#   type        = string
+# }
 
-##########################################################################################
-#                            Addons                                                      #
-##########################################################################################
-variable "eks_addons" {}
+# ##########################################################################################
+# #                            Addons                                                      #
+# ##########################################################################################
+# variable "eks_addons" {}
 
-variable "region" {
-  description = "The AWS region to deploy the resources in"
-  type        = string
-}
+# variable "region" {
+#   description = "The AWS region to deploy the resources in"
+#   type        = string
+# }

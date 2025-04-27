@@ -25,30 +25,30 @@ resource "aws_security_group" "cluster-sg" {
     Name = "${var.environment}-${var.project}-eks-cluster-sg"
   }
 }
-#######################################################################
-#               EKS CLuster NodeGroup Security Group                  #
-#######################################################################
-resource "aws_security_group" "node-sg" {
-  name        = "${var.environment}-${var.project}-eks-cluster-node-sg"
-  description = "${var.environment}-${var.project}eks-cluster-node-sg"
-  vpc_id      = var.vpc_id
+# #######################################################################
+# #               EKS CLuster NodeGroup Security Group                  #
+# #######################################################################
+# resource "aws_security_group" "node-sg" {
+#   name        = "${var.environment}-${var.project}-eks-cluster-node-sg"
+#   description = "${var.environment}-${var.project}eks-cluster-node-sg"
+#   vpc_id      = var.vpc_id
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
+#   egress {
+#     from_port        = 0
+#     to_port          = 0
+#     protocol         = "-1"
+#     cidr_blocks      = ["0.0.0.0/0"]
+#     ipv6_cidr_blocks = ["::/0"]
+#   }
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    security_groups = [aws_security_group.cluster-sg.id]
-  }
+#   ingress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     security_groups = [aws_security_group.cluster-sg.id]
+#   }
 
-  tags = {
-    Name = "${var.environment}-${var.project}-eks-cluster-node-sg"
-  }
-}
+#   tags = {
+#     Name = "${var.environment}-${var.project}-eks-cluster-node-sg"
+#   }
+# }
