@@ -6,7 +6,6 @@ resource "null_resource" "kube-config" {
 set -e
 aws eks update-kubeconfig --name ${aws_eks_cluster.example.name} --region ${var.region} --profile ${var.profile}
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability-1.21+.yaml
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.41"
 EOF
   }
 }
