@@ -9,3 +9,5 @@ variable "eks_access_entry" {}
 variable "node_groups" {}
 variable "key_name" {}
 variable "eks_addons" {}
+variable "region" {}
+variable "profile" {}

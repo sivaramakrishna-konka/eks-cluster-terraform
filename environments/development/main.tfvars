@@ -28,8 +28,8 @@ eks = {
       instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
       min_size       = 1
-      max_size       = 2
-      desired_size   = 2
+      max_size       = 6
+      desired_size   = 6
     }
   }
   eks_access_entry = {
@@ -46,10 +46,8 @@ eks = {
   }
   eks_addons = {
     vpc-cni = "v1.19.4-eksbuild.1"
-    metrics-server = "v0.7.2-eksbuild.3"
     coredns = "v1.11.4-eksbuild.2"
     eks-pod-identity-agent = "v1.3.5-eksbuild.2"
-    aws-ebs-csi-driver = "v1.42.0-eksbuild.1"
   }
 }
 

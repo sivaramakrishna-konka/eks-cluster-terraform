@@ -16,6 +16,8 @@ module "eks_vpc" {
 module "eks_control_plane" {
   depends_on       = [module.eks_vpc]
   source           = "./modules/eks"
+  region           = var.region
+  profile          = var.profile
   environment      = var.common_envs["environment"]
   project          = var.common_envs["project"]
   vpc_id           = module.eks_vpc.vpc_id
