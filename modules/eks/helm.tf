@@ -11,6 +11,24 @@ EOF
   }
 }
 
+resource "helm_release" "aws_ebs_csi_driver" {
+  depends_on = [null_resource.kube-config]
+  name       = "aws-ebs-csi-driver"
+  namespace  = "kube-system"
+
+  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+  chart      = "aws-ebs-csi-driver"
+  set {
+    name  = "controller.serviceAccount.create"
+    value = "true"
+  }
+
+  set {
+    name  = "controller.serviceAccount.name"
+    value = "ebs-csi-controller-sa"
+  }
+}
+
 # resource "helm_release" "aws-controller-ingress" {
 
 #   depends_on = [null_resource.kube-config]
