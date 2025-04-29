@@ -11,3 +11,4 @@ variable "key_name" {}
 variable "eks_addons" {}
 variable "region" {}
 variable "profile" {}
+variable "zone_id" {}

@@ -43,6 +43,11 @@ eks = {
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
       kubernetes_groups = []
     }
+    project-2 = {
+      principal_arn     = "arn:aws:iam::522814728660:role/proj-2"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
+      kubernetes_groups = ["proj-2-rolebinding"]
+    }
   }
   eks_addons = {
     vpc-cni = "v1.19.4-eksbuild.1"

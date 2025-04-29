@@ -28,6 +28,7 @@ module "eks_control_plane" {
   key_name         = var.eks["key_name"]
   eks_access_entry = var.eks["eks_access_entry"]
   eks_addons       = var.eks["eks_addons"]
+  zone_id          = var.bastion["zone_id"]
 }
 # Bastion Host
 module "machine" {
